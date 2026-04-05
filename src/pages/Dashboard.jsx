@@ -1,5 +1,14 @@
+import SummaryCards from "../components/dashboard/SummaryCards";
+import Charts from "../components/dashboard/Charts";
+
 const Dashboard = () => {
-  return <h1>Dashboard Page</h1>;
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <SummaryCards />
+      <Charts />
+    </div>
+  );
 };
 
 export default Dashboard;
