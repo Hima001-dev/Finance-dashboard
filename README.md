@@ -1,16 +1,128 @@
-# React + Vite
+# Finance Dashboard UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
+The Finance Dashboard UI is a frontend web application built using React.  
+It allows users to track financial transactions, view financial summaries, analyze spending patterns, and manage transactions through an interactive dashboard.
 
-Currently, two official plugins are available:
+This project focuses on component-based architecture, state management, role-based UI, data visualization, and responsive design.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
+## Features
+- Dashboard summary cards (Balance, Income, Expenses)
+- Balance trend line chart
+- Spending category pie chart
+- Transactions table
+- Search transactions
+- Filter transactions (Income / Expense)
+- Add new transactions
+- Edit transactions
+- Delete transactions
+- Role based UI (Admin / Viewer)
+- Insights section with financial analysis
+- Global state management using React Context
+- Responsive layout
+- Empty state handling
+- Helper functions for formatting currency and date
 
-## React Compiler
+---
+## Tech Stack
+- React
+- React Router
+- Recharts (Charts)
+- JavaScript
+- CSS
+- Vite
+- React Context API
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
+## Folder Structure
+src/
+  components/
+    layout/
+      Navbar.jsx
+      Sidebar.jsx
+      Layout.jsx
+    dashboard/
+      SummaryCards.jsx
+      Charts.jsx
+    transactions/
+      TransactionsTable.jsx
+  pages/
+    Dashboard.jsx
+    Transactions.jsx
+    Insights.jsx
+  context/
+    FinanceContext.jsx
+  data/
+    mockData.js
+  utils/
+    calculations.js
+    helpers.js
 
-## Expanding the ESLint configuration
+---
+## Installation and Setup
+1. Clone the repository
+2. Install dependencies
+3. Run the development server(install npm)
+4. Open in browser(npm run dev)
+   
+---
+## Role Based Access
+The application supports two user roles:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Admin**
+- Add transactions
+- Edit transactions
+- Delete transactions
+- View dashboard and insights
+
+**Viewer**
+- View dashboard
+- View transactions
+- View insights
+- Cannot modify data
+
+---
+## Insights Provided
+The Insights page provides:
+- Highest spending category
+- Monthly income summary
+- Monthly expense summary
+- Balance calculation
+- Financial observations
+
+---
+## State Management Approach
+The application uses React Context API for global state management.
+The FinanceContext manages:
+- Transactions data
+- Add transaction
+- Edit transaction
+- Delete transaction
+- User role (Admin / Viewer)
+
+This allows multiple components to access and update shared data efficiently.
+
+---
+## Approach
+The project was built using a component-based architecture.
+Reusable components were created for layout, dashboard, and transactions.
+Mock data was used to simulate financial transactions.
+Charts were used to visualize financial trends and spending patterns.
+Role-based UI was implemented to demonstrate different user permissions.
+Helper functions were created for formatting currency and date.
+Context API was used for global state management.
+
+---
+## Future Improvements
+- Dark mode
+- Data persistence using Local Storage
+- Export transactions to CSV
+- Advanced filtering and sorting
+- Authentication system
+- Backend integration
+
+---
+## Author
+Hima Varsha
+Finance Dashboard UI Project
