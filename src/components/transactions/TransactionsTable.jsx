@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { FinanceContext } from "../../context/FinanceContext";
-
+import { formatCurrency, formatDate, capitalizeText } from "../../utils/helpers";
 const TransactionsTable = () => {
   const {
     transactions,
@@ -168,24 +168,23 @@ const TransactionsTable = () => {
           <tbody>
             {filteredTransactions.length === 0 ? (
               <tr>
-                <td colSpan="6">No transactions found</td>
+                <td colSpan="6" style={{ textAlign: "center"}}>No transactions found</td>
               </tr>
             ) : (
               filteredTransactions.map((transaction) => (
                 <tr key={transaction.id}>
-                  <td>{transaction.date}</td>
+                  <td>{formatDate(transaction.date)}</td>
                   <td>{transaction.description}</td>
-                  <td>${transaction.amount}</td>
+                   <td>{formatCurrency(transaction.amount)}</td>
                   <td>{transaction.category}</td>
-                  <td>{transaction.type}</td>
+                  <td>{capitalizeText(transaction.type)}</td>
                   {role === "admin" && (
                     <td>
                       <button onClick={() => handleEdit(transaction)}>
                         Edit
                       </button>
                       <button
-                        onClick={() => handleDelete(transaction.id)}
-                      >
+                        onClick={() => handleDelete(transaction.id)}>
                         Delete
                       </button>
                     </td>
@@ -205,14 +204,22 @@ const styles = {
     width: "100%",
     marginTop: "20px",
     color: "white",
+    borderCollapse: "collapse",
   },
   input: {
     padding: "8px",
     margin: "5px",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
   },
   button: {
     padding: "8px 12px",
     margin: "5px",
+    borderRadius: "5px",
+    border: "none",
+    background: "#3b82f6",
+    color: "white",
+    cursor: "pointer",
   },
 };
 
