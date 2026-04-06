@@ -1,8 +1,8 @@
-import { useState } from "react";
-import transactionsData from "../../data/mockData";
+import { useContext,useState } from "react";
+import { FinanceContext } from "../../context/FinanceContext";
 
-const TransactionsTable = ({role}) => {
-  const [transactions, setTransactions] = useState(transactionsData);
+const TransactionsTable = () => {
+  const {transactions, addTransactions, deleteTransaction, updateTransaction, role} = useContext(FinanceContext);
   const [searchText, setSearchText] = useState("");
   const [filterType, setFilterType] = useState("all");
 
@@ -23,7 +23,7 @@ const TransactionsTable = ({role}) => {
       type: newType,
     };
 
-    setTransactions([...transactions, newTransaction]);
+    addTransactions( newTransaction);
 
     setNewDescription("");
     setNewAmount("");
@@ -35,7 +35,7 @@ const TransactionsTable = ({role}) => {
     const updatedTransactions = transactions.filter(
       (transaction) => transaction.id !== id
     );
-    setTransactions(updatedTransactions);
+    deleteTransaction(id);
   };
 
   const handleEdit = (transaction) => {
@@ -59,7 +59,7 @@ const TransactionsTable = ({role}) => {
         : transaction
     );
 
-    setTransactions(updatedTransactions);
+    updateTransaction(updatedTransactions);
     setEditingId(null);
     setNewDescription("");
     setNewAmount("");

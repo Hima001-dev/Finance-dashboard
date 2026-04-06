@@ -1,4 +1,9 @@
-const Navbar = ({ role, setRole }) => {
+import { useContext } from "react";
+import { FinanceContext } from "../../context/FinanceContext";
+
+const Navbar = () => {
+  const { role, setRole } = useContext(FinanceContext);
+
   return (
     <div style={styles.navbar}>
       <h3>Finance Dashboard</h3>
