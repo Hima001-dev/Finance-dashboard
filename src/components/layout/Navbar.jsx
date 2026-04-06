@@ -1,9 +1,17 @@
-const Navbar = () => {
+const Navbar = ({ role, setRole }) => {
   return (
     <div style={styles.navbar}>
       <h3>Finance Dashboard</h3>
+
       <div>
-        <span>Role: Admin</span>
+        <span style={{ marginRight: "10px" }}>Role:</span>
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        >
+          <option value="admin">Admin</option>
+          <option value="viewer">Viewer</option>
+        </select>
       </div>
     </div>
   );

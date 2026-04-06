@@ -7,11 +7,13 @@ import Insights from "./pages/Insights";
 function App() {
   return (
     <Layout>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/transactions" element={<Transactions />} />
-        <Route path="/insights" element={<Insights />} />
-      </Routes>
+      {(role) => (
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/transactions" element={<Transactions role={role} />} />
+          <Route path="/insights" element={<Insights />} />
+        </Routes>
+      )}
     </Layout>
   );
 }

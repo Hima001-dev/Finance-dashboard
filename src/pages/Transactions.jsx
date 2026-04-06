@@ -1,10 +1,10 @@
 import TransactionsTable from "../components/transactions/TransactionsTable";
 
-const Transactions = () => {
+const Transactions = ({ role }) => {
   return (
     <div>
       <h1>Transactions Page</h1>
-      <TransactionsTable />
+      <TransactionsTable role={role} />
     </div>
   );
 };

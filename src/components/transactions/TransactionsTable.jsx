@@ -1,7 +1,7 @@
 import { useState } from "react";
 import transactionsData from "../../data/mockData";
 
-const TransactionsTable = () => {
+const TransactionsTable = ({role}) => {
   const [transactions, setTransactions] = useState(transactionsData);
   const [searchText, setSearchText] = useState("");
   const [filterType, setFilterType] = useState("all");
@@ -135,14 +135,16 @@ const TransactionsTable = () => {
         <option value="income">Income</option>
       </select>
 
-      {editingId ? (
-        <button onClick={handleUpdate} style={styles.button}>
-          Update Transaction
-        </button>
-      ) : (
-        <button onClick={handleAddTransaction} style={styles.button}>
-          Add Transaction
-        </button>
+      {role === "admin" && (
+        editingId ? (
+          <button onClick={handleUpdate} style={styles.button}>
+            Update Transaction
+          </button>
+        ) : (
+          <button onClick={handleAddTransaction} style={styles.button}>
+            Add Transaction
+          </button>
+        )  
       )}
 
       <table style={styles.table}>
@@ -166,10 +168,14 @@ const TransactionsTable = () => {
               <td>{transaction.category}</td>
               <td>{transaction.type}</td>
               <td>
-                <button onClick={() => handleEdit(transaction)}>Edit</button>
-                <button onClick={() => handleDelete(transaction.id)}>
-                  Delete
-                </button>
+                {role === "admin" && (
+                  <>
+                    <button onClick={() => handleEdit(transaction)}>Edit</button>
+                    <button onClick={() => handleDelete(transaction.id)}>
+                      Delete
+                    </button>
+                  </>
+                )}
               </td>
             </tr>
           ))}

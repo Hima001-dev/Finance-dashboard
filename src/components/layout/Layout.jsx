@@ -1,14 +1,17 @@
+import { useState } from "react";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 
 const Layout = ({ children }) => {
+  const [role, setRole] = useState("admin");
+
   return (
     <div style={styles.container}>
       <Sidebar />
       <div style={styles.main}>
-        <Navbar />
+        <Navbar role={role} setRole={setRole} />
         <div style={styles.content}>
-          {children}
+          {children(role)}
         </div>
       </div>
     </div>
