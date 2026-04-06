@@ -25,9 +25,12 @@ const styles = {
     listStyle: "none",
     padding: 0,
     marginTop: "20px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
+  },
+  link: {
+    color: "white",
+    textDecoration: "none",
+    display: "block",
+    margin: "10px 0",
   },
 };
 

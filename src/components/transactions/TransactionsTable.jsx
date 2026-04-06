@@ -146,7 +146,7 @@ const TransactionsTable = () => {
           </button>
         )  
       )}
-
+    <div style={{ overflowX: "auto" }}>
       <table style={styles.table}>
         <thead>
           <tr>
@@ -160,27 +160,36 @@ const TransactionsTable = () => {
         </thead>
 
         <tbody>
-          {filteredTransactions.map((transaction) => (
-            <tr key={transaction.id}>
-              <td>{transaction.date}</td>
-              <td>{transaction.description}</td>
-              <td>${transaction.amount}</td>
-              <td>{transaction.category}</td>
-              <td>{transaction.type}</td>
-              <td>
-                {role === "admin" && (
-                  <>
-                    <button onClick={() => handleEdit(transaction)}>Edit</button>
-                    <button onClick={() => handleDelete(transaction.id)}>
-                      Delete
-                    </button>
-                  </>
-                )}
+          {filteredTransactions.length === 0 ? (
+            <tr>
+              <td colSpan="6" style={{ textAlign: "center" }}>
+                No transactions found
               </td>
             </tr>
-          ))}
+          ) : (
+            filteredTransactions.map((transaction) => (
+              <tr key={transaction.id}>
+                <td>{transaction.date}</td>
+                <td>{transaction.description}</td>
+                <td>${transaction.amount}</td>
+                <td>{transaction.category}</td>
+                <td>{transaction.type}</td>
+                <td>
+                  {role === "admin" && (
+                    <>
+                      <button onClick={() => handleEdit(transaction)}>Edit</button>
+                      <button onClick={() => handleDelete(transaction.id)}>
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

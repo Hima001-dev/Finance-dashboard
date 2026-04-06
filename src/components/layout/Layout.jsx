@@ -21,6 +21,7 @@ const Layout = ({ children }) => {
 const styles = {
   container: {
     display: "flex",
+    minHeight: "100vh",
   },
   main: {
     flex: 1,

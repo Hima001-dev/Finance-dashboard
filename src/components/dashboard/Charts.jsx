@@ -42,12 +42,12 @@ const Charts = () => {
 
       <div>
         <h3>Spending by Category</h3>
-        <PieChart width={400} height={300}>
+        <PieChart width={500} height={310}>
           <Pie
             data={pieData}
             cx="50%"
             cy="50%"
-            outerRadius={80}
+            outerRadius={100}
             dataKey="value"
             label={({name}) =>name}
           >

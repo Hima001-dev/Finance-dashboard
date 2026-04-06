@@ -25,17 +25,18 @@ const SummaryCards = () => {
 };
 
 const styles = {
-  container: {
+  cardscontainer: {
     display: "flex",
+    flexWrap: "wrap",
     gap: "20px",
-    marginTop: "20px",
   },
   card: {
     background: "#1e293b",
     color: "white",
-    padding: "20px",
-    borderRadius: "10px",
-    width: "200px",
+    padding: "10px",
+    borderRadius: "15px",
+    minwidth: "200px",
+    flex: "1",
   },
 };
 
