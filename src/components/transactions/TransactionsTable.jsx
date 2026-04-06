@@ -1,8 +1,15 @@
-import { useContext,useState } from "react";
+import { useContext, useState } from "react";
 import { FinanceContext } from "../../context/FinanceContext";
 
 const TransactionsTable = () => {
-  const {transactions, addTransactions, deleteTransaction, updateTransaction, role} = useContext(FinanceContext);
+  const {
+    transactions,
+    addTransaction,
+    deleteTransaction,
+    updateTransaction,
+    role,
+  } = useContext(FinanceContext);
+
   const [searchText, setSearchText] = useState("");
   const [filterType, setFilterType] = useState("all");
 
@@ -14,8 +21,10 @@ const TransactionsTable = () => {
   const [editingId, setEditingId] = useState(null);
 
   const handleAddTransaction = () => {
+    if (!newDescription || !newAmount || !newCategory) return;
+
     const newTransaction = {
-      id: transactions.length + 1,
+      id: Date.now(),
       date: new Date().toISOString().split("T")[0],
       description: newDescription,
       amount: Number(newAmount),
@@ -23,7 +32,7 @@ const TransactionsTable = () => {
       type: newType,
     };
 
-    addTransactions( newTransaction);
+    addTransaction(newTransaction);
 
     setNewDescription("");
     setNewAmount("");
@@ -32,9 +41,6 @@ const TransactionsTable = () => {
   };
 
   const handleDelete = (id) => {
-    const updatedTransactions = transactions.filter(
-      (transaction) => transaction.id !== id
-    );
     deleteTransaction(id);
   };
 
@@ -47,19 +53,16 @@ const TransactionsTable = () => {
   };
 
   const handleUpdate = () => {
-    const updatedTransactions = transactions.map((transaction) =>
-      transaction.id === editingId
-        ? {
-            ...transaction,
-            description: newDescription,
-            amount: Number(newAmount),
-            category: newCategory,
-            type: newType,
-          }
-        : transaction
-    );
+    const updatedTransaction = {
+      id: editingId,
+      date: new Date().toISOString().split("T")[0],
+      description: newDescription,
+      amount: Number(newAmount),
+      category: newCategory,
+      type: newType,
+    };
 
-    updateTransaction(updatedTransactions);
+    updateTransaction(updatedTransaction);
     setEditingId(null);
     setNewDescription("");
     setNewAmount("");
@@ -87,109 +90,112 @@ const TransactionsTable = () => {
         placeholder="Search transactions..."
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
-        style={styles.search}
+        style={styles.input}
       />
 
       <select
         value={filterType}
         onChange={(e) => setFilterType(e.target.value)}
-        style={styles.filter}
+        style={styles.input}
       >
         <option value="all">All</option>
         <option value="income">Income</option>
         <option value="expense">Expense</option>
       </select>
 
-      <h3>{editingId ? "Edit Transaction" : "Add New Transaction"}</h3>
-
-      <input
-        type="text"
-        placeholder="Description"
-        value={newDescription}
-        onChange={(e) => setNewDescription(e.target.value)}
-        style={styles.input}
-      />
-
-      <input
-        type="number"
-        placeholder="Amount"
-        value={newAmount}
-        onChange={(e) => setNewAmount(e.target.value)}
-        style={styles.input}
-      />
-
-      <input
-        type="text"
-        placeholder="Category"
-        value={newCategory}
-        onChange={(e) => setNewCategory(e.target.value)}
-        style={styles.input}
-      />
-
-      <select
-        value={newType}
-        onChange={(e) => setNewType(e.target.value)}
-        style={styles.input}
-      >
-        <option value="expense">Expense</option>
-        <option value="income">Income</option>
-      </select>
-
       {role === "admin" && (
-        editingId ? (
-          <button onClick={handleUpdate} style={styles.button}>
-            Update Transaction
-          </button>
-        ) : (
-          <button onClick={handleAddTransaction} style={styles.button}>
-            Add Transaction
-          </button>
-        )  
-      )}
-    <div style={{ overflowX: "auto" }}>
-      <table style={styles.table}>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Type</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+        <>
+          <h3>{editingId ? "Edit Transaction" : "Add New Transaction"}</h3>
 
-        <tbody>
-          {filteredTransactions.length === 0 ? (
-            <tr>
-              <td colSpan="6" style={{ textAlign: "center" }}>
-                No transactions found
-              </td>
-            </tr>
+          <input
+            type="text"
+            placeholder="Description"
+            value={newDescription}
+            onChange={(e) => setNewDescription(e.target.value)}
+            style={styles.input}
+          />
+
+          <input
+            type="number"
+            placeholder="Amount"
+            value={newAmount}
+            onChange={(e) => setNewAmount(e.target.value)}
+            style={styles.input}
+          />
+
+          <input
+            type="text"
+            placeholder="Category"
+            value={newCategory}
+            onChange={(e) => setNewCategory(e.target.value)}
+            style={styles.input}
+          />
+
+          <select
+            value={newType}
+            onChange={(e) => setNewType(e.target.value)}
+            style={styles.input}
+          >
+            <option value="expense">Expense</option>
+            <option value="income">Income</option>
+          </select>
+
+          {editingId ? (
+            <button onClick={handleUpdate} style={styles.button}>
+              Update Transaction
+            </button>
           ) : (
-            filteredTransactions.map((transaction) => (
-              <tr key={transaction.id}>
-                <td>{transaction.date}</td>
-                <td>{transaction.description}</td>
-                <td>${transaction.amount}</td>
-                <td>{transaction.category}</td>
-                <td>{transaction.type}</td>
-                <td>
+            <button onClick={handleAddTransaction} style={styles.button}>
+              Add Transaction
+            </button>
+          )}
+        </>
+      )}
+
+      <div style={{ overflowX: "auto" }}>
+        <table style={styles.table}>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Type</th>
+              {role === "admin" && <th>Actions</th>}
+            </tr>
+          </thead>
+
+          <tbody>
+            {filteredTransactions.length === 0 ? (
+              <tr>
+                <td colSpan="6">No transactions found</td>
+              </tr>
+            ) : (
+              filteredTransactions.map((transaction) => (
+                <tr key={transaction.id}>
+                  <td>{transaction.date}</td>
+                  <td>{transaction.description}</td>
+                  <td>${transaction.amount}</td>
+                  <td>{transaction.category}</td>
+                  <td>{transaction.type}</td>
                   {role === "admin" && (
-                    <>
-                      <button onClick={() => handleEdit(transaction)}>Edit</button>
-                      <button onClick={() => handleDelete(transaction.id)}>
+                    <td>
+                      <button onClick={() => handleEdit(transaction)}>
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(transaction.id)}
+                      >
                         Delete
                       </button>
-                    </>
+                    </td>
                   )}
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
@@ -197,27 +203,16 @@ const TransactionsTable = () => {
 const styles = {
   table: {
     width: "100%",
-    borderCollapse: "collapse",
     marginTop: "20px",
     color: "white",
-  },
-  search: {
-    padding: "8px",
-    marginTop: "10px",
-    width: "300px",
-    marginRight: "10px",
-  },
-  filter: {
-    padding: "8px",
-    marginTop: "10px",
   },
   input: {
     padding: "8px",
     margin: "5px",
   },
   button: {
-    padding: "8px 15px",
-    margin: "10px",
+    padding: "8px 12px",
+    margin: "5px",
   },
 };
 

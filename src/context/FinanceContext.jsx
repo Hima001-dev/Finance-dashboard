@@ -8,23 +8,23 @@ export const FinanceProvider = ({ children }) => {
   const [role, setRole] = useState("admin");
 
   const addTransaction = (newTransaction) => {
-    setTransactions([...transactions, newTransaction]);
+    setTransactions((prev) => [...prev, newTransaction]);
   };
 
   const deleteTransaction = (id) => {
-    const updatedTransactions = transactions.filter(
-      (transaction) => transaction.id !== id
+    setTransactions((prev) =>
+      prev.filter((transaction) => transaction.id !== id)
     );
-    setTransactions(updatedTransactions);
   };
 
   const updateTransaction = (updatedTransaction) => {
-    const updatedTransactions = transactions.map((transaction) =>
-      transaction.id === updatedTransaction.id
-        ? updatedTransaction
-        : transaction
+    setTransactions((prev) =>
+      prev.map((transaction) =>
+        transaction.id === updatedTransaction.id
+          ? updatedTransaction
+          : transaction
+      )
     );
-    setTransactions(updatedTransactions);
   };
 
   return (
